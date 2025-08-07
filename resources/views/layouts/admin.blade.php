@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +10,9 @@
     <style>
         :root {
             --primary-color: #3b82f6;
-            --primary-dark: #1d4ed8;
             --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
             --background: #f8fafc;
             --card-bg: #ffffff;
             --text-primary: #1f2937;
@@ -29,140 +31,25 @@
             background-color: var(--background);
             color: var(--text-primary);
             line-height: 1.5;
-        }
-
-        /* Sidebar Styles */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 260px;
-            height: 100vh;
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-            color: #e2e8f0;
-            transition: width 0.3s ease, transform 0.3s ease;
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .sidebar.collapsed {
-            width: 70px;
-        }
-
-        .sidebar-header {
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            border-bottom: 1px solid #374151;
-        }
-
-        .sidebar-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #fff;
-            transition: opacity 0.2s ease;
-        }
-
-        .sidebar.collapsed .sidebar-header h2 {
-            opacity: 0;
-            width: 0;
-        }
-
-        .sidebar-toggle {
-            background: none;
-            border: none;
-            color: #e2e8f0;
-            font-size: 1.125rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 0.375rem;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-toggle:hover {
-            background-color: #374151;
-            color: #fff;
-        }
-
-        .sidebar-menu {
-            padding: 1rem 0;
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin: 0.25rem 0.75rem;
-        }
-
-        .sidebar-menu a {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: #cbd5e1;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .sidebar-menu a:hover {
-            background-color: #374151;
-            color: #fff;
-            transform: translateX(0.25rem);
-        }
-
-        .sidebar-menu a.active {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-        }
-
-        .sidebar-menu i {
-            width: 1.5rem;
-            font-size: 1rem;
-            text-align: center;
-        }
-
-        .sidebar-menu span {
-            transition: opacity 0.2s ease;
-        }
-
-        .sidebar.collapsed .sidebar-menu span {
-            opacity: 0;
-            width: 0;
-            overflow: hidden;
-        }
-
-        .sidebar.collapsed .sidebar-menu a {
-            justify-content: center;
-            padding: 0.75rem;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 260px;
             transition: margin-left 0.3s ease;
-            min-height: 100vh;
         }
 
-        .main-content.expanded {
-            margin-left: 70px;
-        }
-
-        /* Header */
+        /* Header Styles */
         .header {
-            background: var(--card-bg);
-            padding: 1rem 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: padding 0.3s ease;
         }
 
         .header-left {
-            flex: 1;
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -174,90 +61,241 @@
             color: var(--text-primary);
         }
 
-        .breadcrumb {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
         .header-right {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .search-bar {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-bar input {
-            padding: 0.5rem 2.5rem 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            background: #f9fafb;
-            font-size: 0.875rem;
-            color: var(--text-primary);
-            width: 200px;
-            transition: all 0.3s ease;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .search-bar i {
-            position: absolute;
-            right: 0.75rem;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .user-info {
+        .user-card {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            background-color: #f9fafb;
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
         }
 
-        .user-info:hover {
-            background-color: #e5e7eb;
+        .user-card:hover {
+            transform: translateY(-2px);
         }
 
         .user-avatar {
             width: 2rem;
             height: 2rem;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            background: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             font-weight: 600;
-            font-size: 0.875rem;
         }
 
-        /* Content Area */
-        .content {
-            padding: 1.5rem;
+        .user-name {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            right: -40px;
+            top: 1rem;
+            background: var(--primary-color);
+            border: none;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 0 0.5rem 0.5rem 0;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+            z-index: 1001;
+        }
+
+        .sidebar-toggle:hover {
+            background: #1d4ed8;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            padding: 0.5rem 1rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: color 0.3s ease, background 0.3s ease;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--primary-color);
+            background: #f1f5f9;
+        }
+
+        .sidebar-nav a.active {
+            color: var(--primary-color);
+            font-weight: 500;
+            background: #e0f2fe;
+        }
+
+        .sidebar-nav i {
+            width: 1rem;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: rotate(15deg);
+        }
+
+        .card-icon.blue {
+            background: var(--primary-color);
+        }
+
+        .card-icon.green {
+            background: var(--secondary-color);
+        }
+
+        .card-icon.yellow {
+            background: var(--accent-color);
+        }
+
+        .card-icon.red {
+            background: var(--danger-color);
+        }
+
+        .card-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .card-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Additional Sections */
+        .additional-section {
+            background: var(--card-bg);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .buy-now-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--danger-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .buy-now-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
-                transform: translateX(-260px);
+                transform: translateX(-250px);
             }
 
             .sidebar.collapsed {
                 transform: translateX(0);
-                width: 70px;
+                width: 250px;
             }
 
             .main-content {
@@ -265,114 +303,98 @@
             }
 
             .main-content.expanded {
-                margin-left: 70px;
+                margin-left: 250px;
             }
 
-            .header {
-                flex-wrap: wrap;
-            }
-
-            .search-bar {
-                width: 100%;
-            }
-
-            .search-bar input {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .header-title {
-                font-size: 1.25rem;
+            .cards-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <h1 class="header-title">@yield('page-title', 'Dashboard')</h1>
+        </div>
+        <div class="header-right">
+            <div class="user-card">
+                <div class="user-avatar">JS</div>
+                <div>
+                    <div class="user-name">John Smith</div>
+                    <div class="user-role">Administrator</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            <h2>AdminPanel</h2>
-        </div>
-        <ul class="sidebar-menu">
-            <li>
-                <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">
-                    <i class="fas fa-users"></i>
-                    <span>Users</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.products') }}" class="{{ request()->routeIs('admin.products*') ? 'active' : '' }}">
-                    <i class="fas fa-box"></i>
-                    <span>Products</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.orders') }}" class="{{ request()->routeIs('admin.orders*') ? 'active' : '' }}">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Orders</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.analytics') }}" class="{{ request()->routeIs('admin.analytics') ? 'active' : '' }}">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Analytics</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.settings') }}" class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" onclick="alert('Logout akan tersedia setelah auth system dibuat!')">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </li>
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="sidebar-nav">
+            <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard <span>2</span></a></li>
+            <li><a href="#"><i class="fas fa-th-large"></i> Layouts</a></li>
+            <li><a href="#"><i class="fas fa-chart-bar"></i> Statistics</a></li>
+            <li><a href="#"><i class="fas fa-table"></i> Data</a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> Chart</a></li>
+            <li><a href="#"><i class="fas fa-cogs"></i> Admin Panel</a></li>
         </ul>
     </div>
 
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-left">
-                <h1 class="header-title">@yield('page-title', 'Dashboard')</h1>
-                @if(isset($breadcrumb))
-                    <div class="breadcrumb">{{ $breadcrumb }}</div>
-                @endif
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon blue"><i class="fas fa-user-plus"></i></div>
+                <div class="card-value">980+</div>
+                <div class="card-label">Registrations</div>
+                <div class="card-date">May 23 - June 01 (2018)</div>
             </div>
-            <div class="header-right">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search..." id="searchInput">
-                    <i class="fas fa-search"></i>
-                </div>
-                <div class="user-info">
-                    <div class="user-avatar">A</div>
-                    <span>Admin User</span>
-                </div>
+            <div class="card">
+                <div class="card-icon green"><i class="fas fa-sync-alt"></i></div>
+                <div class="card-value">1,563</div>
+                <div class="card-label">Renewals</div>
+                <div class="card-date">May 23 - June 01 (2018)</div>
+            </div>
+            <div class="card">
+                <div class="card-icon yellow"><i class="fas fa-dollar-sign"></i></div>
+                <div class="card-value">42.6%</div>
+                <div class="card-label">Revenue</div>
+                <div class="card-date">Today, August 06, 2025</div>
+            </div>
+            <div class="card">
+                <div class="card-icon red"><i class="fas fa-times"></i></div>
+                <div class="card-value">42.6%</div>
+                <div class="card-label">Cancellations</div>
+                <div class="card-date">Today, August 06, 2025</div>
             </div>
         </div>
 
-        <!-- Content -->
-        <div class="content">
-            @yield('content')
+        <div class="additional-section">
+            <div>Revenue analytics</div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                <span style="background: var(--accent-color); width: 1rem; height: 1rem; border-radius: 50%;"></span>
+                <span>Revenue</span>
+                <span style="background: var(--primary-color); width: 1rem; height: 1rem; border-radius: 50%;"></span>
+                <span>Sales</span>
+            </div>
+            <div style="margin-top: 0.5rem;">Monthly <span style="color: var(--text-secondary);">&darr;</span></div>
         </div>
+
+        <div class="additional-section">
+            <div>Calendar</div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                Today: Wednesday, August 06, 2025, 02:42 PM +08
+            </div>
+        </div>
+
+        <a href="#" class="buy-now-btn">Buy Now</a>
     </div>
 
     <script>
-        // Sidebar Toggle
         const sidebar = document.getElementById('sidebar');
         const mainContent = document.getElementById('mainContent');
         const sidebarToggle = document.getElementById('sidebarToggle');
@@ -380,35 +402,19 @@
         sidebarToggle.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
+            sidebarToggle.innerHTML = sidebar.classList.contains('collapsed') ? '<i class="fas fa-arrow-right"></i>' : '<i class="fas fa-bars"></i>';
             localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
         });
 
-        // Restore sidebar state
+        // Restore sidebar state on page load
         document.addEventListener('DOMContentLoaded', () => {
             const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
             if (isCollapsed) {
                 sidebar.classList.add('collapsed');
                 mainContent.classList.add('expanded');
-            }
-        });
-
-        // Search functionality (placeholder)
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            // Implement search logic here
-            console.log('Searching for:', searchTerm);
-        });
-
-        // Active menu highlighting
-        const menuLinks = document.querySelectorAll('.sidebar-menu a');
-        menuLinks.forEach(link => {
-            if (link.getAttribute('href') === window.location.pathname) {
-                link.classList.add('active');
+                sidebarToggle.innerHTML = '<i class="fas fa-arrow-right"></i>';
             }
         });
     </script>
-
-    @stack('scripts')
 </body>
 </html>

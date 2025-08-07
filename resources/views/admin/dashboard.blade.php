@@ -1,4 +1,4 @@
-```php
+
 @extends('layouts.admin')
 
 @section('title', 'Dashboard - Admin Panel')
@@ -14,16 +14,28 @@
     }
 
     .stat-card {
-        background: white;
+        background: #ffffff;
         border-radius: 1rem;
         padding: 1.5rem;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #1d4ed8);
     }
 
     .stat-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
     }
 
     .stat-card-header {
@@ -47,6 +59,11 @@
         align-items: center;
         justify-content: center;
         color: white;
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover .stat-card-icon {
+        transform: scale(1.1);
     }
 
     .stat-card-value {
@@ -84,15 +101,21 @@
     }
 
     .card {
-        background: white;
+        background: #ffffff;
         border-radius: 1rem;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         overflow: hidden;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
     }
 
     .card-header {
         padding: 1.5rem;
         border-bottom: 1px solid #e5e7eb;
+        background: #f9fafb;
     }
 
     .card-title {
@@ -128,6 +151,11 @@
         padding: 1rem;
         color: #1f2937;
         border-bottom: 1px solid #f3f4f6;
+        transition: background 0.3s ease;
+    }
+
+    .table tr:hover td {
+        background: #f9fafb;
     }
 
     .status-badge {
@@ -137,6 +165,11 @@
         font-weight: 500;
         display: inline-flex;
         align-items: center;
+        transition: transform 0.3s ease;
+    }
+
+    .status-badge:hover {
+        transform: scale(1.05);
     }
 
     .action-button {
@@ -154,6 +187,7 @@
     .action-button:hover {
         background: #f9fafb;
         transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
     .action-icon {
@@ -164,6 +198,11 @@
         align-items: center;
         justify-content: center;
         color: white;
+        transition: transform 0.3s ease;
+    }
+
+    .action-button:hover .action-icon {
+        transform: rotate(15deg);
     }
 </style>
 
@@ -268,6 +307,9 @@
                     </tbody>
                 </table>
             </div>
+            <div style="text-align: right; margin-top: 1rem; color: #6b7280;">
+                Last updated: August 06, 2025, 02:33 PM +08
+            </div>
         </div>
     </div>
 
@@ -321,7 +363,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Future implementation for dynamic actions
         });
     });
+
+    // Dynamic date update (for demonstration)
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' };
+    document.querySelector('.table-responsive + div').textContent = `Last updated: ${now.toLocaleString('en-US', options)}`;
 });
 </script>
 @endsection
-```
