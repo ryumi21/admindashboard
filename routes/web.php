@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home');
+    return view('dashboard');
 })->name('home');
 
 Route::get('/profile', function () {
@@ -15,6 +15,6 @@ Route::get('/settings', function () {
 })->name('settings');
 
 Route::get('/logout', function () {
-    // Logic for logout (you can implement authentication logic here)
+    // Logic for logout
     return redirect('/');
 })->name('logout');
