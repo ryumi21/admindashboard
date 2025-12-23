@@ -31,7 +31,7 @@
             <!-- Content Section -->
             <div class="mt-8">
                 @yield('content')
-                @include('chart.index')
+                @include('dashboard.index')
             </div>
         </div>
 
